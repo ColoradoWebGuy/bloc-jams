@@ -29,6 +29,22 @@ var albumPicasso = {
      ]
  };
 
+ // My third Album
+ var albumSteven = {
+     name: 'Sideways',
+     artist: 'Steven Schulte',
+     label: 'SAS',
+     year: '1991',
+     albumArtUrl: 'assets/images/album_covers/18.png',
+     songs: [
+         { name: 'If You Only Knew', length: '2:04' },
+         { name: 'Home Again', length: '4:04' },
+         { name: 'Amazing Grace', length: '5:41'},
+         { name: 'Better Late Than Never', length: '1:54' },
+         { name: 'Wrong phone number', length: '3:14'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -65,5 +81,14 @@ var albumPicasso = {
  };
 
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+      albums = [albumPicasso, albumMarconi, albumSteven]
+      index = 0;
+      setCurrentAlbum(albums[index]);
+
+      document.getElementsByClassName('album-cover-art')[0].addEventListener("click", function(){
+        index++;
+        if (albums.length === index)
+          index = 0; // reset index loop
+        setCurrentAlbum(albums[index]);
+      }, false);
  };
