@@ -142,7 +142,7 @@
     // Set a new current song
     setSong(currentSongIndex + 1);
     currentSoundFile.play();
-  
+
     // Update the Player Bar information
     $('.currently-playing .song-name').text(currentSongFromAlbum.name);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
@@ -193,6 +193,35 @@
 
  };
 
+ var togglePlayFromPlayerBar = function() {
+
+    //  If a song is paused and the play button is clicked in the player bar
+    if(currentSoundFile.isPaused()) {
+      // Change the song number cell from a play button to a pause button
+      var $songNumberCell = getSongNumberCell( currentlyPlayingSongNumber );
+      $songNumberCell.html(pauseButtonTemplate);
+
+      // Change the HTML of the player bar's play button to a pause button
+      $mainPlayPause.html(playerBarPauseButton);
+
+      // Play the song
+      currentSoundFile.play();
+    } else {
+      // If the song is playing (so a current sound file exist), and the pause button is clicked
+
+      // change the song number cell from a play button to a pause button
+      var $songNumberCell = getSongNumberCell( currentlyPlayingSongNumber );
+      $songNumberCell.html(playButtonTemplate);
+
+      // change the HTML of the player bar's play button to a pause button
+      $mainPlayPause.html(playerBarPlayButton);
+
+      // pause the song
+      currentSoundFile.pause();
+    }
+
+ };
+
  var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
  var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
  var playerBarPlayButton = '<span class="ion-play"></span>';
@@ -207,9 +236,11 @@
 
  var $previousButton = $('.main-controls .previous');
  var $nextButton = $('.main-controls .next');
+ var $mainPlayPause = $('.main-controls .play-pause')
 
  $(document).ready(function() {
      setCurrentAlbum(albumPicasso);
      $previousButton.click(previousSong);
      $nextButton.click(nextSong);
+     $mainPlayPause.click(togglePlayFromPlayerBar);
  });
